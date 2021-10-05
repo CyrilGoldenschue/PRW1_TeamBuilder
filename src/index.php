@@ -1,5 +1,5 @@
 <?php
-require "./src/controller/HomeController.php";
+require "./controller/HomeController.php";
 $action = "";
 
 if(isset($_GET['action'])){
