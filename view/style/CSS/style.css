@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+}
+
+.header.home {
+  background-color: green;
+  text-align: center;
+  color: white;
+}
+
+/*# sourceMappingURL=style.css.map */
