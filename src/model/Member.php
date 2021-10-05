@@ -1,6 +1,5 @@
 <?php
-
-require __DIR__ . "/../model/DB.php";
+require __DIR__ . "./DB.php";
 
 class Member
 {

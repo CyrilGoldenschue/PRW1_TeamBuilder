@@ -4,7 +4,7 @@ class DB
 {
     private static function getPDO()
     {
-        require __DIR__ . "/../.env.php";
+        require __DIR__ . "/.env.php";
         return new PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $user, $password);
     }
 

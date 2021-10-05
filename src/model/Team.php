@@ -1,6 +1,5 @@
 <?php
-
-require __DIR__ . "/../model/DB.php";
+require __DIR__ . "./DB.php";
 
 class Team
 {
@@ -53,8 +52,6 @@ class Team
 
         $res = $res[0];
         return self::make(['id' => $res['id'], 'name' => $res['name'], 'state_id' => $res['state_id']]);
-
-
     }
 
     public function save(): bool
