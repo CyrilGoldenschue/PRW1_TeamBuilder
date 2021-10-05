@@ -1,8 +1,11 @@
 {
+    "autoload": {
+        "psr-4": {
+            "TeamBuilder\\Model\\": "src/model",
+            "TeamBuilder\\Controller\\": "src/controller"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "9.5.10"
-    },
-  "require": {
-    "ext-pdo": "*"
-  }
+    }
 }

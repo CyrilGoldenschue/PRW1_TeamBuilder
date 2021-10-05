@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__."/../model/Role.php";
+require __DIR__."/../src/model/Role.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -88,5 +88,10 @@ class RoleTest extends TestCase
         $id = $role->id;
         $this->assertTrue(Role::destroy($id)); // expected to succeed
         $this->assertNull(Role::find($id)); // we should not find it back
+    }
+
+    public static function tearDownAfterClass() : void
+    {
+        DB::execute("DELETE FROM roles WHERE slug = :slug", ["slug" => "XXX"]);
     }
 }

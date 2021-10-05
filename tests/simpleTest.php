@@ -1,7 +1,8 @@
 <?php
+namespace TeamBuilder\Model;
 use PHPUnit\Framework\TestCase;
 
-require __DIR__ . "/../model/DB.php";
+//require __DIR__ . "/../model/DB.php";
 
 class simpleTest extends TestCase
 {
@@ -13,23 +14,23 @@ class simpleTest extends TestCase
 
     public function testSelectMany()
     {
-        $this->assertNotNull(true,DB::selectMany("SELECT * FROM roles", []),"Select many roles tests");
+        $this->assertNotNull(true,DB::selectMany("SELECT * FROM roles", []),"Select many roles Tests");
     }
 
     public function testSelectOne()
     {
-        $this->assertNotNull(true,DB::selectOne("SELECT * FROM roles where slug = :slug", ["slug" => "MOD"]),"Select one role tests");
+        $this->assertNotNull(true,DB::selectOne("SELECT * FROM roles where slug = :slug", ["slug" => "MOD"]),"Select one role Tests");
     }
 
     public function testInsert()
     {
-        $this->assertNotNull(true,DB::selectOne("SELECT * FROM roles where slug = :slug", ["slug" => "XXX"]),"Select one role tests");
+        $this->assertNotNull(true,DB::selectOne("SELECT * FROM roles where slug = :slug", ["slug" => "XXX"]),"Select one role Tests");
     }
 
     public function testExecute()
     {
         DB::execute("UPDATE roles set name = :name WHERE slug = :slug", ["slug" => "XXX", "name" => "Correcteur"]);
-        $this->assertNotNull(true,DB::selectOne("SELECT * FROM roles where slug = :slug", ["slug" => "XXX"]),"Select one role tests");
+        $this->assertNotNull(true,DB::selectOne("SELECT * FROM roles where slug = :slug", ["slug" => "XXX"]),"Select one role Tests");
     }
 
     public static function tearDownAfterClass() : void

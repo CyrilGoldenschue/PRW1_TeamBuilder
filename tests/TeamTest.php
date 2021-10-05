@@ -1,8 +1,7 @@
 <?php
 
-require __DIR__."/../model/Team.php";
-//require __DIR__."/../model/Member.php";
-
+require __DIR__."/../src/model/Team.php";
+require __DIR__."/../src/model/Member.php";
 use PHPUnit\Framework\TestCase;
 
 class TeamTest extends TestCase
@@ -97,5 +96,10 @@ class TeamTest extends TestCase
         $this->assertEquals(1,count(Member::find(3)->teams()));
         $this->assertEquals(0,count(Member::find(9)->teams()));
         $this->assertEquals(3,count(Member::find(10)->teams()));
+    }
+
+    public static function tearDownAfterClass() : void
+    {
+        DB::execute("DELETE FROM teams WHERE name = :name", ["name" => "XXX"]);
     }
 }
