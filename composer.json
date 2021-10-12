@@ -1,8 +1,8 @@
 {
     "autoload": {
         "psr-4": {
-            "TeamBuilder\\Model\\": "src/model",
-            "TeamBuilder\\Controller\\": "src/controller"
+            "TeamBuilder\\Model\\": "model",
+            "TeamBuilder\\Controller\\": "controller"
         }
     },
     "require-dev": {

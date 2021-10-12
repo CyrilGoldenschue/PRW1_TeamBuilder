@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__."/../src/model/Role.php";
+require __DIR__ . "/../src/model/Role.php";
 
 use PHPUnit\Framework\TestCase;
 
