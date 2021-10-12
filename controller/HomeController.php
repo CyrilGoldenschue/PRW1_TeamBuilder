@@ -18,9 +18,6 @@ class HomeController
         require "./view/home.php";
     }
 
-    public function showListMemberPage(){
-        $members = Member::all();
-        require "./view/memberList.php";
-    }
+
 
 }

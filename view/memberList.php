@@ -15,26 +15,20 @@ ob_start();
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($members as $member) { ?>
+            <?php foreach ($members as $member) : ?>
                 <tr>
                     <td>
                         <?= $member->name ?>
                     </td>
                     <td>
-                        <?php $teams = $member->teams();
-                        $lastElement = end($teams);;
-                        foreach ($teams as $team) { ?>
+                        <?php foreach ($member->teams() as $key => $team) : ?>
                             <?= $team->name ?>
-                            <?php if ($team->name != $lastElement->name) { ?>
-
-                                <?= ", " ?>
-
-                            <?php } ?>
-                        <?php } ?>
+                            <?=  ($key !== array_key_last($member->teams()) ? ", " : "" )  ?>
+                        <?php endforeach; ?>
                     </td>
                 </tr>
 
-            <?php } ?>
+            <?php endforeach; ?>
             </tbody>
 
         </table>

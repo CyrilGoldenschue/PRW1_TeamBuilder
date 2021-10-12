@@ -1,6 +1,7 @@
 <?php
 namespace TeamBuilder;
 use TeamBuilder\Controller\HomeController;
+use TeamBuilder\Controller\AuthController;
 use TeamBuilder\Controller\MemberController;
 
 session_start();
@@ -12,7 +13,7 @@ $action = "";
 $homeController = new HomeController();
 $memberController = new MemberController();
 
-$_SESSION['user_connected'] = $memberController->autoConnect();
+$_SESSION['user_connected'] = AuthController::autoConnect();
 
 if(isset($_GET['action'])){
     $action = $_GET['action'];
@@ -21,7 +22,7 @@ if(isset($_GET['action'])){
 switch ($action){
 
     case "ListMember":
-        $homeController->showListMemberPage();
+        $memberController->index();
         break;
 
     default:
