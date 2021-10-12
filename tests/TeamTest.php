@@ -1,7 +1,7 @@
 <?php
 
-require __DIR__."/../src/model/Team.php";
-require __DIR__."/../src/model/Member.php";
+require __DIR__ . "/../src/model/Team.php";
+require __DIR__ . "/../src/model/Member.php";
 use PHPUnit\Framework\TestCase;
 
 class TeamTest extends TestCase
