@@ -1,5 +1,5 @@
 <?php
-require "../view\header.php";
+require "header.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,7 +9,7 @@ require "../view\header.php";
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>TeamBuilder Cyril</title>
 
-    <link rel="stylesheet" href="\style\CSS\style.css">
+    <link rel="stylesheet" href="view/style/CSS/style.css">
 
 </head>
 <body>

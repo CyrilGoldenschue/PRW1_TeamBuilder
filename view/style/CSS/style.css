@@ -2,7 +2,7 @@ body {
   margin: 0;
 }
 
-header {
+header.home {
   background-color: green;
   text-align: center;
   color: white;
