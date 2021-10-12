@@ -6,7 +6,7 @@ class HomeController
 {
 
     public function showHomePage(){
-        require __DIR__ . "/../model/.env.php";
+        require dirname(__DIR__, 1 ). "\model\.env.php";
         $member = Member::find($connect_user_id);
         require "../view/home.php";
     }
