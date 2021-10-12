@@ -41,8 +41,12 @@ class Team
 
     static function all(): array
     {
-        return DB::selectMany("SELECT * FROM teams ", []);
-
+        $res = DB::selectMany("SELECT * FROM teams ", []);
+        $return = [];
+        foreach ($res as $result) {
+            $return[] = Team::make($result);
+        }
+        return $return;
     }
 
     static function find(int $id): ?Team
@@ -94,5 +98,14 @@ class Team
         }
     }
 
+    public function members(): array
+    {
+        $res = DB::selectMany("SELECT members.id, role_id, is_captain, members.name FROM teams INNER JOIN team_member ON teams.id = team_member.team_id INNER JOIN members ON team_member.member_id = members.id WHERE team_id = :member_id", ["member_id" => $this->id]);
+        $return = [];
+        foreach ($res as $result) {
+            $return[] = Member::make($result);
+        }
+        return $return;
+    }
 
 }
