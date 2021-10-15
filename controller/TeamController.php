@@ -12,6 +12,11 @@ class TeamController
         require "./view/myTeamList.php";
     }
 
+    public function teamInfo(){
+        $team = Team::find($_GET['id']);
+        require "./view/teamInfo.php";
+    }
+
 
 
 }
