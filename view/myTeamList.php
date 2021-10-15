@@ -21,7 +21,7 @@ ob_start();
             <?php foreach ($teams as $team) : ?>
                 <tr>
                     <td>
-                        <?= $team->name ?>
+                        <a href="?action=TeamInfo&id=<?= $team->id ?>"><?= $team->name ?></a>
                     </td>
                     <td>
                         <?= count($team->members()) ?>
