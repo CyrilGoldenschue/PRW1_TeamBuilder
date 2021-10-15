@@ -10,6 +10,7 @@ class Member
     public $name;
     public $password;
     public $role_id;
+    public $is_captain;
 
     public function __construct()
     {
@@ -38,6 +39,9 @@ class Member
 
         $member->name = $params['name'];
         $member->role_id = $params['role_id'];
+        if(isset($params['is_captain'])){
+            $member->is_captain = $params['is_captain'];
+        }
 
         return $member;
     }

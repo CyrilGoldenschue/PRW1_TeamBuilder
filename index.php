@@ -3,6 +3,7 @@ namespace TeamBuilder;
 use TeamBuilder\Controller\HomeController;
 use TeamBuilder\Controller\AuthController;
 use TeamBuilder\Controller\MemberController;
+use TeamBuilder\Controller\TeamController;
 
 session_start();
 
@@ -12,6 +13,7 @@ $action = "";
 
 $homeController = new HomeController();
 $memberController = new MemberController();
+$teamController = new TeamController();
 
 $_SESSION['user_connected'] = AuthController::autoConnect();
 
@@ -23,6 +25,14 @@ switch ($action){
 
     case "ListMember":
         $memberController->index();
+        break;
+
+    case "MyTeams":
+        $teamController->myTeam();
+        break;
+
+    case "TeamInfo":
+        $teamController->teamInfo();
         break;
 
     default:
