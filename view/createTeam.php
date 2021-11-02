@@ -1,7 +1,7 @@
 <?php
 ob_start();
 ?>
-
+<?= $error; ?>
     <section class="row">
         <form method="get">
             <input type="hidden" value="ValidTeam" name="action">
