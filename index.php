@@ -39,6 +39,13 @@ switch ($action){
         $memberController->listModo();
         break;
 
+    case "CreateTeam":
+        $teamController->createTeam();
+        break;
+
+    case "ValidTeam":
+        $teamController->create();
+        break;
     default:
         $homeController->showHomePage();
         break;

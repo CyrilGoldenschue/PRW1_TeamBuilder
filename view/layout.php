@@ -22,6 +22,7 @@ require "header.php";
 <!-- HEADER -->
 <?= $header; ?>
 <!--  /HEADER -->
+
 <!-- Page Content -->
 <main class="container">
     <?= $contenu; ?>
