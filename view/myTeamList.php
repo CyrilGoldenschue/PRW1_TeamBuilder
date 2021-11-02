@@ -18,20 +18,20 @@ ob_start();
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($teams as $team) : ?>
-                <tr>
-                    <td>
-                        <a href="?action=TeamInfo&id=<?= $team->id ?>"><?= $team->name ?></a>
-                    </td>
-                    <td>
-                        <?= count($team->members()) ?>
-                    </td>
-                    <td>
-                        <?php foreach ($team->members() as $member): ?>
-                            <?= ($member->is_captain == 1) ? $member->name : "" ?>
-                        <?php endforeach; ?>
-                    </td>
-                </tr>
+            <?php foreach ($member->teams() as $team) : ?>
+                    <tr>
+                        <td>
+                            <a href="?action=TeamInfo&id=<?= $team->id ?>"><?= $team->name ?></a>
+                        </td>
+                        <td>
+                            <?= count($team->members()) ?>
+                        </td>
+                        <td>
+                            <?php foreach ($team->members() as $member): ?>
+                                <?= ($member->is_captain == 1) ? $member->name : "" ?>
+                            <?php endforeach; ?>
+                        </td>
+                    </tr>
 
             <?php endforeach; ?>
             </tbody>
