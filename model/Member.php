@@ -48,7 +48,7 @@ class Member
 
     static function all(): array
     {
-        $res = DB::selectMany("SELECT * FROM members ", []);
+        $res = DB::selectMany("SELECT * FROM members ORDER BY name ASC", []);
         $return = [];
         foreach ($res as $result) {
             $return[] = Member::make($result);
@@ -109,7 +109,7 @@ class Member
 
     public function teams(): array
     {
-        $res = DB::selectMany("SELECT teams.id, teams.name, state_id FROM members INNER JOIN team_member ON members.id = team_member.member_id INNER JOIN teams ON team_member.team_id = teams.id WHERE members.id = :member_id", ["member_id" => $this->id]);
+        $res = DB::selectMany("SELECT teams.id, teams.name, state_id FROM members INNER JOIN team_member ON members.id = team_member.member_id INNER JOIN teams ON team_member.team_id = teams.id WHERE members.id = :member_id ORDER BY teams.name ASC", ["member_id" => $this->id]);
         $return = [];
         foreach ($res as $result) {
             $return[] = Team::make($result);
