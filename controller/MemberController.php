@@ -17,5 +17,10 @@ class MemberController
         require "./view/myTeamList.php";
     }
 
+    public function listModo(){
+        $members = Member::all();
+        require "./view/modoList.php";
+    }
+
 
 }
