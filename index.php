@@ -28,7 +28,7 @@ switch ($action){
         break;
 
     case "MyTeams":
-        $teamController->myTeam();
+        $memberController->myTeam();
         break;
 
     case "TeamInfo":
