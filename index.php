@@ -35,6 +35,10 @@ switch ($action){
         $teamController->teamInfo();
         break;
 
+    case "ListModo":
+        $memberController->listModo();
+        break;
+
     default:
         $homeController->showHomePage();
         break;
