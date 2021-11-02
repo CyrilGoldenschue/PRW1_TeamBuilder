@@ -23,9 +23,14 @@ ob_start();
                     <td>
                         <?php foreach ($member->teams() as $key => $team) : ?>
                             <?= $team->name ?>
-                            <?=  ($key !== array_key_last($member->teams()) ? ", " : "" )  ?>
+                            <?= ($key !== array_key_last($member->teams()) ? ", " : "") ?>
                         <?php endforeach; ?>
                     </td>
+                    <?php if ($_SESSION['user_connected']->role_id == 2): ?>
+                        <td>
+                            <a href="?action=AddModo&id=<?= $member->id ?>" <?= $member->role_id == 2 ? "hidden" : "" ?>>Nommer modérateur</a>
+                        </td>
+                    <?php endif; ?>
                 </tr>
 
             <?php endforeach; ?>
