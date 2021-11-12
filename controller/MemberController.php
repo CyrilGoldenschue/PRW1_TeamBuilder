@@ -21,6 +21,10 @@ class MemberController
         $member = Member::find($_SESSION['user_connected']->id);
         require "./view/myProfile.php";
     }
+    public function profile(){
+        $member = Member::find($_GET['id']);
+        require "./view/myProfile.php";
+    }
 
     public function listModo(){
         $members = Member::all();
