@@ -18,7 +18,7 @@ ob_start();
             <?php foreach ($members as $member) : ?>
                 <tr>
                     <td>
-                        <?= $member->name ?>
+                        <a <?= ($_SESSION['user_connected']->role->slug == "MOD" ) ? " class='linkTable' href='?action=Profile&id=$member->id'" : "" ?>><?= $member->name ?></a>
                     </td>
                     <td>
                         <?php foreach ($member->teams() as $key => $team) : ?>
