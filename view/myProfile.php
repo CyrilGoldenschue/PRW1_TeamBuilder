@@ -16,6 +16,7 @@ ob_start();
                     <?= ($memberTeam->is_captain == 1 && $member->id == $memberTeam->id) ? "<a> Capitaine de : </a><br>" . $team->name : "" ?>
                     <?= ($memberTeam->is_captain == 0 && $member->id == $memberTeam->id) ? "<a> Membre de : </a><br>" . $team->name : "" ?>
                 <?php endforeach; ?>
+            <?= ($team == null ? "Inscrit dans aucune équipe" : "") ?>
             <?php endforeach; ?>
         </div>
     </section>
