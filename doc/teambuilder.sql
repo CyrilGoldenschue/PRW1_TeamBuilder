@@ -3,10 +3,9 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
-SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
-SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
-        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
 -- Schema teambuilder
@@ -16,132 +15,139 @@ DROP SCHEMA IF EXISTS `teambuilder`;
 -- -----------------------------------------------------
 -- Schema teambuilder
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `teambuilder` DEFAULT CHARACTER SET utf8mb3;
-USE `teambuilder`;
+CREATE SCHEMA IF NOT EXISTS `teambuilder` DEFAULT CHARACTER SET utf8mb3 ;
+USE `teambuilder` ;
 
 -- -----------------------------------------------------
 -- Table `teambuilder`.`roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `teambuilder`.`roles`;
+CREATE TABLE IF NOT EXISTS `teambuilder`.`roles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `slug` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
-CREATE TABLE IF NOT EXISTS `teambuilder`.`roles`
-(
-    `id`   INT         NOT NULL AUTO_INCREMENT,
-    `slug` VARCHAR(10) NOT NULL,
-    `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-    UNIQUE INDEX `slug_UNIQUE` (`slug` ASC) VISIBLE
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb3;
+
+-- -----------------------------------------------------
+-- Table `teambuilder`.`status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `teambuilder`.`status` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `slug` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `teambuilder`.`members`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `teambuilder`.`members`;
-
-CREATE TABLE IF NOT EXISTS `teambuilder`.`members`
-(
-    `id`       INT          NOT NULL AUTO_INCREMENT,
-    `name`     VARCHAR(45)  NOT NULL,
-    `password` VARCHAR(500) NOT NULL,
-    `role_id`  INT          NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-    INDEX `fk_members_roles_idx` (`role_id` ASC) VISIBLE,
-    CONSTRAINT `fk_members_roles`
-        FOREIGN KEY (`role_id`)
-            REFERENCES `teambuilder`.`roles` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb3;
+CREATE TABLE IF NOT EXISTS `teambuilder`.`members` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(500) NOT NULL,
+  `role_id` INT NOT NULL,
+  `status_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  INDEX `fk_members_roles_idx` (`role_id` ASC) VISIBLE,
+  INDEX `fk_members_status1_idx` (`status_id` ASC) VISIBLE,
+  CONSTRAINT `fk_members_roles`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `teambuilder`.`roles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_members_status1`
+    FOREIGN KEY (`status_id`)
+    REFERENCES `teambuilder`.`status` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
 -- Table `teambuilder`.`states`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `teambuilder`.`states`;
-
-CREATE TABLE IF NOT EXISTS `teambuilder`.`states`
-(
-    `id`   INT         NOT NULL AUTO_INCREMENT,
-    `slug` VARCHAR(10) NOT NULL,
-    `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-    UNIQUE INDEX `slug_UNIQUE` (`slug` ASC) VISIBLE
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb3;
+CREATE TABLE IF NOT EXISTS `teambuilder`.`states` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `slug` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  UNIQUE INDEX `slug_UNIQUE` (`slug` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
 -- Table `teambuilder`.`teams`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `teambuilder`.`teams`;
-
-CREATE TABLE IF NOT EXISTS `teambuilder`.`teams`
-(
-    `id`       INT         NOT NULL AUTO_INCREMENT,
-    `name`     VARCHAR(45) NOT NULL,
-    `state_id` INT         NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-    INDEX `fk_teams_states1_idx` (`state_id` ASC) VISIBLE,
-    CONSTRAINT `fk_teams_states1`
-        FOREIGN KEY (`state_id`)
-            REFERENCES `teambuilder`.`states` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb3;
+CREATE TABLE IF NOT EXISTS `teambuilder`.`teams` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `state_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  INDEX `fk_teams_states1_idx` (`state_id` ASC) VISIBLE,
+  CONSTRAINT `fk_teams_states1`
+    FOREIGN KEY (`state_id`)
+    REFERENCES `teambuilder`.`states` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
 -- Table `teambuilder`.`team_member`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `teambuilder`.`team_member`;
-
-CREATE TABLE IF NOT EXISTS `teambuilder`.`team_member`
-(
-    `id`              INT     NOT NULL AUTO_INCREMENT,
-    `member_id`       INT     NOT NULL,
-    `team_id`         INT     NOT NULL,
-    `membership_type` TINYINT NOT NULL COMMENT '0 = inactive\n1 = active\n2 = invitation\n3 = request',
-    `is_captain`      TINYINT NOT NULL DEFAULT 0,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `unique_membership` (`member_id` ASC, `team_id` ASC) VISIBLE,
-    INDEX `fk_team_member_members1_idx` (`member_id` ASC) VISIBLE,
-    INDEX `fk_team_member_teams1_idx` (`team_id` ASC) VISIBLE,
-    CONSTRAINT `fk_team_member_members1`
-        FOREIGN KEY (`member_id`)
-            REFERENCES `teambuilder`.`members` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `fk_team_member_teams1`
-        FOREIGN KEY (`team_id`)
-            REFERENCES `teambuilder`.`teams` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb3;
+CREATE TABLE IF NOT EXISTS `teambuilder`.`team_member` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `member_id` INT NOT NULL,
+  `team_id` INT NOT NULL,
+  `membership_type` TINYINT NOT NULL COMMENT '0 = inactive\n1 = active\n2 = invitation\n3 = request',
+  `is_captain` TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `unique_membership` (`member_id` ASC, `team_id` ASC) VISIBLE,
+  INDEX `fk_team_member_members1_idx` (`member_id` ASC) VISIBLE,
+  INDEX `fk_team_member_teams1_idx` (`team_id` ASC) VISIBLE,
+  CONSTRAINT `fk_team_member_members1`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `teambuilder`.`members` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_team_member_teams1`
+    FOREIGN KEY (`team_id`)
+    REFERENCES `teambuilder`.`teams` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
-SET SQL_MODE = @OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 -- -----------------------------------------------------
 -- Table `roles` - Data
 -- -----------------------------------------------------
 INSERT INTO roles(roles.slug, roles.name)
 VALUES ("MEM", "Member"),
        ("MOD", "Moderator");
+       
+-- -----------------------------------------------------
+-- Table `roles` - Data
+-- -----------------------------------------------------
+INSERT INTO status(status.slug, status.name)
+VALUES ("ENA", "Actif"),
+	   ("DIS", "Inactif"),
+       ("BAN", "Banni");
 
 -- -----------------------------------------------------
 -- Table `states` - Data
@@ -178,58 +184,58 @@ VALUES ("Suicide Squad", 1),
 -- Table `members` - Data
 -- -----------------------------------------------------
 
-insert into teambuilder.members (name, password, role_id)
-values ('Anthony', 'Anthony''s_Pa$$w0rd', 1),
-       ('Armand', 'Armand''s_Pa$$w0rd', 1),
-       ('Cyril', 'Cyril''s_Pa$$w0rd', 1),
-       ('Filipe', 'Filipe''s_Pa$$w0rd', 1),
-       ('Helene', 'Helene''s_Pa$$w0rd', 1),
-       ('Mario', 'Mario''s_Pa$$w0rd', 1),
-       ('Mathieu', 'Mathieu''s_Pa$$w0rd', 1),
-       ('Mauro', 'Mauro''s_Pa$$w0rd', 1),
-       ('Melodie', 'Melodie''s_Pa$$w0rd', 1),
-       ('Noah', 'Noah''s_Pa$$w0rd', 1),
-       ('Robiel', 'Robiel''s_Pa$$w0rd', 1),
-       ('Sou', 'Sou''s_Pa$$w0rd', 1),
-       ('Theo', 'Theo''s_Pa$$w0rd', 1),
-       ('Yannick', 'Yannick''s_Pa$$w0rd', 1),
-       ('Xavier', 'Xavier''s_Pa$$w0rd', 2),
-       ('Pascal', 'Pascal''s_Pa$$w0rd', 2),
-       ('Nicolas', 'Nicolas''s_Pa$$w0rd', 2),
-       ('Lèi', 'Lèi''s_Pa$$w0rd', 1),
-       ('Marie-josée', 'Marie-josée''s_Pa$$w0rd', 1),
-       ('Håkan', 'Håkan''s_Pa$$w0rd', 1),
-       ('Cécile', 'Cécile''s_Pa$$w0rd', 1),
-       ('Dà', 'Dà''s_Pa$$w0rd', 1),
-       ('Néhémie', 'Néhémie''s_Pa$$w0rd', 1),
-       ('Sòng', 'Sòng''s_Pa$$w0rd', 1),
-       ('Audréanne', 'Audréanne''s_Pa$$w0rd', 1),
-       ('Lucrèce', 'Lucrèce''s_Pa$$w0rd', 2),
-       ('Göran', 'Göran''s_Pa$$w0rd', 1),
-       ('Hélèna', 'Hélèna''s_Pa$$w0rd', 1),
-       ('Åslög', 'Åslög''s_Pa$$w0rd', 1),
-       ('Inès', 'Inès''s_Pa$$w0rd', 1),
-       ('Agnès', 'Agnès''s_Pa$$w0rd', 1),
-       ('Táng', 'Táng''s_Pa$$w0rd', 1),
-       ('Yáo', 'Yáo''s_Pa$$w0rd', 1),
-       ('Marlène', 'Marlène''s_Pa$$w0rd', 1),
-       ('Eléa', 'Eléa''s_Pa$$w0rd', 1),
-       ('Thérèse', 'Thérèse''s_Pa$$w0rd', 1),
-       ('Pélagie', 'Pélagie''s_Pa$$w0rd', 1),
-       ('Clélia', 'Clélia''s_Pa$$w0rd', 2),
-       ('Anaé', 'Anaé''s_Pa$$w0rd', 1),
-       ('Marie-noël', 'Marie-noël''s_Pa$$w0rd', 1),
-       ('Andréanne', 'Andréanne''s_Pa$$w0rd', 1),
-       ('Gérald', 'Gérald''s_Pa$$w0rd', 1),
-       ('Bérénice', 'Bérénice''s_Pa$$w0rd', 1),
-       ('Anaël', 'Anaël''s_Pa$$w0rd', 1),
-       ('Mélissandre', 'Mélissandre''s_Pa$$w0rd', 1),
-       ('Marie-hélène', 'Marie-hélène''s_Pa$$w0rd', 1),
-       ('Desirée', 'Desirée''s_Pa$$w0rd', 1),
-       ('Zhì', 'Zhì''s_Pa$$w0rd', 1),
-       ('Lén', 'Lén''s_Pa$$w0rd', 1),
-       ('Cinéma', 'Cinéma''s_Pa$$w0rd', 1),
-       ('Marylène', 'Marylène''s_Pa$$w0rd', 1);
+insert into teambuilder.members (name, password, role_id, status_id)
+values ('Anthony', 'Anthony''s_Pa$$w0rd', 1, 1),
+       ('Armand', 'Armand''s_Pa$$w0rd', 1, 1),
+       ('Cyril', 'Cyril''s_Pa$$w0rd', 1, 1),
+       ('Filipe', 'Filipe''s_Pa$$w0rd', 1, 1),
+       ('Helene', 'Helene''s_Pa$$w0rd', 1, 1),
+       ('Mario', 'Mario''s_Pa$$w0rd', 1, 1),
+       ('Mathieu', 'Mathieu''s_Pa$$w0rd', 1, 1),
+       ('Mauro', 'Mauro''s_Pa$$w0rd', 1, 1),
+       ('Melodie', 'Melodie''s_Pa$$w0rd', 1, 1),
+       ('Noah', 'Noah''s_Pa$$w0rd', 1, 1),
+       ('Robiel', 'Robiel''s_Pa$$w0rd', 1, 1),
+       ('Sou', 'Sou''s_Pa$$w0rd', 1, 1),
+       ('Theo', 'Theo''s_Pa$$w0rd', 1, 1),
+       ('Yannick', 'Yannick''s_Pa$$w0rd', 1, 1),
+       ('Xavier', 'Xavier''s_Pa$$w0rd', 2, 1),
+       ('Pascal', 'Pascal''s_Pa$$w0rd', 2, 1),
+       ('Nicolas', 'Nicolas''s_Pa$$w0rd', 2, 1),
+       ('Lèi', 'Lèi''s_Pa$$w0rd', 1, 1),
+       ('Marie-josée', 'Marie-josée''s_Pa$$w0rd', 1, 1),
+       ('Håkan', 'Håkan''s_Pa$$w0rd', 1, 1),
+       ('Cécile', 'Cécile''s_Pa$$w0rd', 1, 1),
+       ('Dà', 'Dà''s_Pa$$w0rd', 1, 1),
+       ('Néhémie', 'Néhémie''s_Pa$$w0rd', 1, 1),
+       ('Sòng', 'Sòng''s_Pa$$w0rd', 1, 1),
+       ('Audréanne', 'Audréanne''s_Pa$$w0rd', 1, 1),
+       ('Lucrèce', 'Lucrèce''s_Pa$$w0rd', 2, 1),
+       ('Göran', 'Göran''s_Pa$$w0rd', 1,1),
+       ('Hélèna', 'Hélèna''s_Pa$$w0rd', 1, 1),
+       ('Åslög', 'Åslög''s_Pa$$w0rd', 1, 1),
+       ('Inès', 'Inès''s_Pa$$w0rd', 1, 1),
+       ('Agnès', 'Agnès''s_Pa$$w0rd', 1, 1),
+       ('Táng', 'Táng''s_Pa$$w0rd', 1, 1),
+       ('Yáo', 'Yáo''s_Pa$$w0rd', 1, 1),
+       ('Marlène', 'Marlène''s_Pa$$w0rd', 1, 1),
+       ('Eléa', 'Eléa''s_Pa$$w0rd', 1, 1),
+       ('Thérèse', 'Thérèse''s_Pa$$w0rd', 1, 1),
+       ('Pélagie', 'Pélagie''s_Pa$$w0rd', 1, 1),
+       ('Clélia', 'Clélia''s_Pa$$w0rd', 2, 1),
+       ('Anaé', 'Anaé''s_Pa$$w0rd', 1, 1),
+       ('Marie-noël', 'Marie-noël''s_Pa$$w0rd', 1, 1),
+       ('Andréanne', 'Andréanne''s_Pa$$w0rd', 1, 1),
+       ('Gérald', 'Gérald''s_Pa$$w0rd', 1, 1),
+       ('Bérénice', 'Bérénice''s_Pa$$w0rd', 1, 1),
+       ('Anaël', 'Anaël''s_Pa$$w0rd', 1,1),
+       ('Mélissandre', 'Mélissandre''s_Pa$$w0rd', 1, 1),
+       ('Marie-hélène', 'Marie-hélène''s_Pa$$w0rd', 1, 1),
+       ('Desirée', 'Desirée''s_Pa$$w0rd', 1, 1),
+       ('Zhì', 'Zhì''s_Pa$$w0rd', 1, 1),
+       ('Lén', 'Lén''s_Pa$$w0rd', 1, 1),
+       ('Cinéma', 'Cinéma''s_Pa$$w0rd', 1, 1),
+       ('Marylène', 'Marylène''s_Pa$$w0rd', 1, 1);
 
 -- -----------------------------------------------------
 -- Table `teambuilder` - Data
@@ -279,26 +285,7 @@ VALUES ('27', '1', '1', '1'),
        ('35', '13', '1', '1'),
        ('18', '14', '1', '1'),
        ('19', '15', '1', '1');
-INSERT INTO `teambuilder`.`team_member` (`member_id`, `team_id`, `membership_type`)
-VALUES ('25', '10', '0'),
-       ('13', '10', '1'),
-       ('15', '11', '1'),
-       ('16', '11', '2'),
-       ('29', '11', '3'),
-       ('15', '12', '1'),
-       ('16', '12', '0'),
-       ('26', '12', '1'),
-       ('18', '12', '2'),
-       ('16', '13', '1'),
-       ('17', '13', '3'),
-       ('23', '13', '1'),
-       ('19', '13', '2'),
-       ('20', '13', '1'),
-       ('27', '14', '0'),
-       ('30', '14', '1'),
-       ('20', '15', '2'),
-       ('21', '15', '1'),
-       ('24', '15', '3');
+
 
 
 
