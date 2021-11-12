@@ -6,6 +6,8 @@ ob_start();
 
         <div class="column">
             <form class="column">
+                <input type="hidden" name="action" value="UpdateProfile">
+                <input type="hidden" name="id" value="<?= $member->id ?>">
                 <label for="name">nom :</label>
                 <input id="name"  name="name" <?= ($_SESSION['user_connected']->role->slug == "MOD" ) ? "disabled" : "" ?> value="<?= $member->name ?>" type="text">
                 <label for="role">role :</label>
