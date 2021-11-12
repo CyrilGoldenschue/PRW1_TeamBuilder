@@ -1,11 +1,16 @@
 <?php
 
-require __DIR__ . "/../src/model/Team.php";
-require __DIR__ . "/../src/model/Member.php";
+namespace TeamBuilder\Model;
 use PHPUnit\Framework\TestCase;
 
 class TeamTest extends TestCase
 {
+
+    static function setUpBeforeClass(): void
+    {
+        $sqlscript = file_get_contents(dirname(__DIR__, 1) . '/doc/teambuilder.sql');
+        DB::execute($sqlscript);
+    }
     /**
      * @covers Team::all()
      */
