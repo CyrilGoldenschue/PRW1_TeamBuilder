@@ -78,7 +78,7 @@ class Role
     static function destroy(int $id): bool
     {
         try {
-            DB::select("DELETE FROM roles WHERE id = :id", ['id' => $id]);
+            DB::execute("DELETE FROM roles WHERE id = :id", ['id' => $id]);
             return true;
         } catch (\Throwable $th) {
             return false;

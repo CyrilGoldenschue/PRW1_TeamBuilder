@@ -5,6 +5,8 @@ ob_start();
     <section class="row">
         <a class="button column" href="?action=ListMember">Liste membres</a>
         <a class="button column" href="?action=MyTeams">Mes équipes</a>
+        <a class="button column" href="?action=ListModo">Liste des modérateurs</a>
+        <a class="button column" href="?action=CreateTeam">Création d'équipe</a>
     </section>
 
 

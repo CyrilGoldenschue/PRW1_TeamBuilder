@@ -28,13 +28,24 @@ switch ($action){
         break;
 
     case "MyTeams":
-        $teamController->myTeam();
+        $memberController->myTeam();
         break;
 
     case "TeamInfo":
         $teamController->teamInfo();
         break;
 
+    case "ListModo":
+        $memberController->listModo();
+        break;
+
+    case "CreateTeam":
+        $teamController->createTeam();
+        break;
+
+    case "ValidTeam":
+        $teamController->create();
+        break;
     default:
         $homeController->showHomePage();
         break;

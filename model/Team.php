@@ -14,7 +14,7 @@ class Team
 
     public function create(): bool
     {
-        $check = DB::selectOne("SELECT * FROM teams WHERE NAME = :name", ['name' => $this->name]);
+        $check = DB::selectOne("SELECT * FROM teams WHERE name = :name", ['name' => $this->name]);
 
         if (!empty($check)) {
             return false;
@@ -23,6 +23,34 @@ class Team
         $this->id = DB::insert("INSERT INTO teams(id, name,state_id) VALUES (:id, :name, :state_id)", ['id' => $this->id, 'name' => $this->name, 'state_id' => $this->state_id]);
 
         return true;
+    }
+
+    public function addMember(array $params): bool
+    {
+        $check = DB::selectOne("SELECT * FROM team_member WHERE member_id = :member_id AND team_id = :team_id", ['member_id' => $params["member_id"], "team_id" => $this->id]);
+
+        if (!empty($check)) {
+            return false;
+        }
+
+        DB::insert("INSERT INTO team_member(member_id, team_id, membership_type, is_captain) VALUES (:member_id, :team_id, 0, 0)", ['member_id' => $params["member_id"], "team_id" => $this->id]);
+
+        return true;
+    }
+
+    public function changeCaptain(array $params): bool
+    {
+        $check = DB::selectOne("SELECT * FROM team_member WHERE member_id = :member_id AND team_id = :team_id AND is_captain = 1", ['member_id' => $params["member_id"], "team_id"=> $this->id]);
+
+        if (!empty($check)) {
+            return false;
+        }
+
+        DB::execute("UPDATE team_member set is_captain = 0 WHERE is_captain = 1 AND team_id = :team_id", ['team_id' => $this->id]);
+
+        return DB::execute("UPDATE team_member set is_captain = 1 WHERE member_id = :member_id AND team_id = :team_id", ['member_id' => $params['member_id'], 'team_id' => $this->id]);
+
+
     }
 
     static function make(array $params)

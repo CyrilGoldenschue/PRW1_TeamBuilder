@@ -39,12 +39,22 @@ class DB
         return intval($PDO->lastInsertId());
     }
 
-    static function execute($req, $array)
-    {
-        $PDO = self::getPDO();
-        $statement = $PDO->prepare($req);
-        $statement->execute($array);
-        return $statement->execute($array);
+    /**
+     * @param $query - The SQL query
+     * @param array $params - The parameters
+     * @return bool|null
+     */
+    static function execute($query, $params = []) {
+        $DB = self::getPDO();
+        try {
+            $statement = $DB->prepare($query);     //Préparer la requête
+            $statement->execute($params);       //Exécuter la requête
+            $DB = null;
+            return true;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return null;
+        }
     }
 
 
