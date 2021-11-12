@@ -59,6 +59,10 @@ switch ($action){
         $memberController->editProfile();
         break;
 
+    case "UpdateProfile":
+        $memberController->updateProfile();
+        break;
+
     default:
         $homeController->showHomePage();
         break;
