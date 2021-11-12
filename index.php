@@ -46,6 +46,23 @@ switch ($action){
     case "ValidTeam":
         $teamController->create();
         break;
+
+    case "MyProfile":
+        $memberController->myProfile();
+        break;
+
+    case "Profile":
+        $memberController->profile();
+        break;
+
+    case "EditProfile":
+        $memberController->editProfile();
+        break;
+
+    case "UpdateProfile":
+        $memberController->updateProfile();
+        break;
+
     default:
         $homeController->showHomePage();
         break;

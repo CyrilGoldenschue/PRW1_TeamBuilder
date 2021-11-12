@@ -14,7 +14,29 @@ header.home {
 }
 
 .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap !important;
   margin-top: 10px !important;
+}
+
+.row .column {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+  margin-right: 5px;
+  max-width: 50%;
+  width: 50%;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+
+.linkTable {
+  text-decoration: none;
+  color: black;
 }
 
 /*# sourceMappingURL=style.css.map */
