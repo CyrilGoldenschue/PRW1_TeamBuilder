@@ -42,8 +42,12 @@ class Status
 
     static function all(): array
     {
-        return DB::selectMany("SELECT * FROM status ", []);
-
+        $res = DB::selectMany("SELECT * FROM status ", []);
+        $return = [];
+        foreach ($res as $result) {
+            $return[] = Status::make($result);
+        }
+        return $return;
     }
 
     static function find(int $id): ?Status
