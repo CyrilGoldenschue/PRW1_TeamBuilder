@@ -17,6 +17,11 @@ class MemberController
         require "./view/myTeamList.php";
     }
 
+    public function myProfile(){
+        $member = Member::find($_SESSION['user_connected']->id);
+        require "./view/myProfile.php";
+    }
+
     public function listModo(){
         $members = Member::all();
         require "./view/modoList.php";

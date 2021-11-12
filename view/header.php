@@ -5,7 +5,7 @@ ob_start();
         <section class="container">
             <h1><a class="title_home" href="?action=home">TeamBuilder</a></h1>
             <a>Version: Début Examen - Cyril</a><br>
-            <a>Connecté en tant que :</a> <?= $_SESSION['user_connected']->name ?>
+            <a>Connecté en tant que :</a> <a class="link" href="?action=MyProfile"><?= $_SESSION['user_connected']->name ?></a>
         </section>
     </header>
 

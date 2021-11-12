@@ -128,7 +128,7 @@ class Team
 
     public function members(): array
     {
-        $res = DB::selectMany("SELECT members.id, role_id, is_captain, members.name FROM teams INNER JOIN team_member ON teams.id = team_member.team_id INNER JOIN members ON team_member.member_id = members.id WHERE team_id = :member_id", ["member_id" => $this->id]);
+        $res = DB::selectMany("SELECT members.id, role_id, is_captain, members.name, status_id FROM teams INNER JOIN team_member ON teams.id = team_member.team_id INNER JOIN members ON team_member.member_id = members.id WHERE team_id = :member_id", ["member_id" => $this->id]);
         $return = [];
         foreach ($res as $result) {
             $return[] = Member::make($result);
