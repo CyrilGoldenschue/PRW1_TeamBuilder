@@ -1,8 +1,9 @@
 <?php
 ob_start();
 ?>
-
+    <div class="row"><h1>Profile</h1> <a href="?action=EditProfile&id=<?= $member->id ?>"><i class="fas fa-edit fa-2x"></i></a></div>
     <section class="row">
+
         <div class="column">
             <a>nom : <?= $member->name ?> </a>
             <a>role : <?= $member->role->name ?> </a>

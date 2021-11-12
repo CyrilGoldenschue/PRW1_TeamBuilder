@@ -42,8 +42,12 @@ class Role
 
     static function all(): array
     {
-        return DB::selectMany("SELECT * FROM roles ", []);
-
+        $res = DB::selectMany("SELECT * FROM roles ", []);
+        $return = [];
+        foreach ($res as $result) {
+            $return[] = Role::make($result);
+        }
+        return $return;
     }
 
     static function find(int $id): ?Role
