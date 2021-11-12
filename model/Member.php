@@ -92,8 +92,8 @@ class Member
     public function save(): bool
     {
         $check = DB::selectOne("SELECT * FROM members WHERE name = :name", ['name' => $this->name]);
-        // si il n'est pas vide, alors return false, car le nom sera dupliqué
-        if (!empty($check)) {
+        // TODO le nom peut encore exister
+        if (empty($check)) {
             return false;
         }
 
